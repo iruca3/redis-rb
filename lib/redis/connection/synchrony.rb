@@ -47,9 +47,7 @@ class Redis
         begin
           EventMachine::Synchrony.sync @req
         rescue
-          Fiber.new {
-            EventMachine::Synchrony.sync @req
-          }.resume
+          return :reply, ''
         end
       end
 
