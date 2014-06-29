@@ -44,7 +44,9 @@ class Redis
 
       def read
         @req = EventMachine::DefaultDeferrable.new
-        EventMachine::Synchrony.sync @req
+        Fiber.new {
+          EventMachine::Synchrony.sync @req
+        }.resume
       end
 
       def send(data)
